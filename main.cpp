@@ -6,11 +6,8 @@
 using namespace std;
 
 #define N 5
-string states[3] = { "Eating", "Hungry", "Thinking"};
 string philosopher_state[N];
 int philosophers[N] = {0, 1, 2, 3, 4};
-int forks[N] = {1, 1, 1, 1, 1}; //1 - fork unlocked | 0 - fork locked
-bool waiting[N];
 
 int locker = 1;
 void lock(){
@@ -32,8 +29,6 @@ void check(int philosopher){
         && philosopher_state[right(philosopher)] != "Eating"){ //Right neighbour not eating
 
         philosopher_state[philosopher] = "Eating"; //Starts eating for 2 seconds and locks forks
-        forks[philosopher] = 0;
-        forks[right(philosopher)] = 0;
         std::cout << "Philosopher " << philosopher << " takes fork " <<  philosopher << " and " << right(philosopher) << std::endl;
         cout << "Philosopher " << philosopher << " is eating" << endl;
         }
@@ -55,8 +50,6 @@ void try_eat(int philosopher){
 void think(int philosopher){
     lock();
     if (philosopher_state[philosopher] == "Eating"){ //If he ate, then he starts thinking
-        forks[philosopher] = 1;
-        forks[right(philosopher)] = 1;
         philosopher_state[philosopher] = "Thinking"; //Mark, he's thinking
         std::cout << "Philosopher " << philosopher << " putting fork " << philosopher << " and " << right(philosopher) << " down" << endl;
         cout << "Philosopher " << philosopher << " is thinking" << endl;
