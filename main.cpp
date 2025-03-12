@@ -32,13 +32,10 @@ void check(int philosopher){
         && philosopher_state[right(philosopher)] != "Eating"){ //Right neighbour not eating
 
         philosopher_state[philosopher] = "Eating"; //Starts eating for 2 seconds and locks forks
-        // lock(right(philosopher));
-        // lock(left(philosopher));
         forks[philosopher] = 0;
         forks[right(philosopher)] = 0;
-        std::cout << "Philosopher " << philosopher << " takes fork " <<  left(philosopher) << " and " << right(philosopher) << std::endl;
+        std::cout << "Philosopher " << philosopher << " takes fork " <<  philosopher << " and " << right(philosopher) << std::endl;
         cout << "Philosopher " << philosopher << " is eating" << endl;
-        // Sleep(2000);
         }
 }
 
@@ -61,7 +58,7 @@ void think(int philosopher){
         forks[philosopher] = 1;
         forks[right(philosopher)] = 1;
         philosopher_state[philosopher] = "Thinking"; //Mark, he's thinking
-        std::cout << "Philosopher " << philosopher << " putting fork " << left(philosopher) << " and " << right(philosopher) << " down" << endl;
+        std::cout << "Philosopher " << philosopher << " putting fork " << philosopher << " and " << right(philosopher) << " down" << endl;
         cout << "Philosopher " << philosopher << " is thinking" << endl;
 
         check(left(philosopher));
@@ -85,12 +82,10 @@ int main(){
 
     for (int i = 0; i < N; i++) {
         philosopher_state[i] = "Thinking"; // Everyone starts with thinking
-        // waiting[i] = false; // Nobody waits
     }
 
     for (int i = 0; i < N ; i++){
         threads[i] = thread(philosopher, i);    //Pass function and argument, which is philosopher id
-        //cout << "Philosopher " << i << " is thinking" << endl; //Everyone starts with thinking
     }
     for (int i = 0; i < N; i++) threads[i].join();  //Join all threads to process
 
