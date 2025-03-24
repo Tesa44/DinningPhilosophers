@@ -7,7 +7,7 @@ using namespace std;
 
 #define N 5
 string philosopher_state[N];
-int philosophers[N] = {0, 1, 2, 3, 4};
+// int philosophers[N] = {0, 1, 2, 3, 4};
 
 int locker = 1;
 void lock(){
@@ -29,7 +29,7 @@ void check(int philosopher){
         && philosopher_state[right(philosopher)] != "Eating"){ //Right neighbour not eating
 
         philosopher_state[philosopher] = "Eating"; //Starts eating for 2 seconds and locks forks
-        std::cout << "Philosopher " << philosopher << " takes fork " <<  philosopher << " and " << right(philosopher) << std::endl;
+        std::cout << "Philosopher " << philosopher << " is taking fork " <<  philosopher << " and " << right(philosopher) << std::endl;
         cout << "Philosopher " << philosopher << " is eating" << endl;
         }
 }
@@ -51,7 +51,7 @@ void think(int philosopher){
     lock();
     if (philosopher_state[philosopher] == "Eating"){ //If he ate, then he starts thinking
         philosopher_state[philosopher] = "Thinking"; //Mark, he's thinking
-        std::cout << "Philosopher " << philosopher << " putting fork " << philosopher << " and " << right(philosopher) << " down" << endl;
+        std::cout << "Philosopher " << philosopher << " is putting fork " << philosopher << " and " << right(philosopher) << " down" << endl;
         cout << "Philosopher " << philosopher << " is thinking" << endl;
 
         check(left(philosopher));
