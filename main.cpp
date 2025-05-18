@@ -8,7 +8,6 @@ using namespace std;
 
 #define N 5
 string philosopher_state[N];
-// int philosophers[N] = {0, 1, 2, 3, 4};
 
 mutex mtx;
 
@@ -39,7 +38,6 @@ void try_eat(int philosopher){
 }
 
 void think(int philosopher){
-    // lock();
     mtx.lock();
     if (philosopher_state[philosopher] == "Eating"){ //If he ate, then he starts thinking
         philosopher_state[philosopher] = "Thinking"; //Mark, he's thinking
