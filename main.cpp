@@ -2,6 +2,7 @@
 #include <thread>
 #include <windows.h>
 #include <string>
+#include <mutex>
 
 using namespace std;
 
@@ -9,16 +10,7 @@ using namespace std;
 string philosopher_state[N];
 int philosophers[N] = {0, 1, 2, 3, 4};
 
-int locker = 1;
-void lock(){
-    while (locker != 1)
-        Sleep(1);
-    locker = 0;
-}
-
-void unlock(){
-    locker = 1;
-}
+mutex mtx;
 
 int left(int position) {return (position + N - 1) % N;}    //Returns position of left neighbour
 int right(int position) {return (position + 1) % N;}   //Returns position of right neigbour
@@ -35,20 +27,20 @@ void check(int philosopher){
 }
 
 void try_eat(int philosopher){
-    lock();
+    mtx.lock();
     philosopher_state[philosopher] = "Hungry";    //Mark, he's hungry
     cout << "Philosopher " << philosopher << " is hungry" << endl;
 
     check(philosopher); //Check if he can eat
-    unlock();
-
+    mtx.unlock();
     while (philosopher_state[philosopher] != "Eating"){ //If he can't eat, he waits
         Sleep(1);
     }
 }
 
 void think(int philosopher){
-    lock();
+    // lock();
+    mtx.lock();
     if (philosopher_state[philosopher] == "Eating"){ //If he ate, then he starts thinking
         philosopher_state[philosopher] = "Thinking"; //Mark, he's thinking
         std::cout << "Philosopher " << philosopher << " putting fork " << philosopher << " and " << right(philosopher) << " down" << endl;
@@ -57,7 +49,7 @@ void think(int philosopher){
         check(left(philosopher));
         check(right(philosopher));
     }
-    unlock();
+    mtx.unlock();
     Sleep(1000);
 }
 
